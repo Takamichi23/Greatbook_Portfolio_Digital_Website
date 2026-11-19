@@ -1,16 +1,19 @@
 import React from 'react'
-import { ArrowUp, BookOpen, Heart, Sparkles } from 'lucide-react'
+import { ArrowUp } from 'lucide-react'
+import { AnalysisItem } from '../data/portfolioData'
 
 interface FooterProps {
   studentName: string
   subject: string
   academicYear: string
+  analyses?: AnalysisItem[]
 }
 
 export const Footer: React.FC<FooterProps> = ({
   studentName = 'Roejon Kayne Paul P. Hernandez',
   subject = 'Great Books',
   academicYear = '2025–2026',
+  analyses = [],
 }) => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -55,7 +58,7 @@ export const Footer: React.FC<FooterProps> = ({
           {/* Column 2: Portfolio Navigation */}
           <div className="space-y-3">
             <span className="text-[#FF3B00] font-bold uppercase tracking-wider block">
-              // SECTIONS INDEX
+              // SECTIONS DIRECTORY
             </span>
             <ul className="space-y-1.5 font-bold">
               <li>
@@ -92,13 +95,11 @@ export const Footer: React.FC<FooterProps> = ({
               // CRITICAL LENSES
             </span>
             <div className="space-y-1 text-white/70">
-              <p>• Marxist Theory (Kafka)</p>
-              <p>• Psychoanalytic / Archetypal (Sophocles)</p>
-              <p>• Feminist Criticism (Austen)</p>
-              <p>• Historical-Biographical (Fitzgerald)</p>
-              <p>• Post-Colonial & Cultural (Achebe)</p>
-              <p>• Formalism (Shakespeare)</p>
-              <p>• Deconstruction (Orwell)</p>
+              {analyses.map((item) => (
+                <p key={item.id}>
+                  • {item.lens} ({item.title})
+                </p>
+              ))}
             </div>
           </div>
 

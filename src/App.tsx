@@ -28,11 +28,20 @@ export function App() {
   })
   const [soundEnabled, setSoundEnabled] = useState(true)
   const [reviewedIds, setReviewedIds] = useState<string[]>(() => {
+    const validIds = new Set(portfolioData.analyses.map((a) => a.id))
     try {
       const saved = localStorage.getItem('gb_reviewed_analyses')
-      return saved ? JSON.parse(saved) : ['metamorphosis']
+      if (saved) {
+        const parsed: string[] = JSON.parse(saved)
+        const filtered = parsed.filter((id) => validIds.has(id))
+        if (filtered.length !== parsed.length) {
+          localStorage.setItem('gb_reviewed_analyses', JSON.stringify(filtered))
+        }
+        return filtered
+      }
+      return []
     } catch {
-      return ['metamorphosis']
+      return []
     }
   })
 
@@ -153,6 +162,7 @@ export function App() {
         studentName={student.name}
         subject={student.subject}
         academicYear={student.academicYear}
+        analyses={portfolioData.analyses}
       />
     </div>
   )

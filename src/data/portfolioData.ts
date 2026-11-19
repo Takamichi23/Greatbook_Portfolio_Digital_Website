@@ -19,22 +19,19 @@ export interface AnalysisItem {
   id: string
   indexNumber: string
   title: string
+  subtitle?: string
   author: string
+  tradition: string
   yearPublished: string
   lens: string
   lensColor: string
   summary: string
-  fullAnalysis: {
-    thesis: string
-    introduction: string
-    criticalApplication: string
-    textualEvidence: string
-    conclusion: string
-  }
-  keyQuote: string
+  paragraphs: string[]
+  imageCover: string
+  imageAlt: string
+  imageCaption: string
   themes: string[]
   tags: string[]
-  imageCover: string
   accentColor: string
 }
 
@@ -100,164 +97,158 @@ export const portfolioData: GreatBooksPortfolio = {
     learningExperience: "My actual experience was profoundly transformative. Great Books challenged me to read critically rather than passively. Through rigorous literary lenses, I discovered that every ancient tragedy, Victorian satire, and dystopian nightmare serves as an urgent mirror to our modern consciousness, cultivating emotional resonance and critical analytical clarity."
   },
   stats: [
-    { label: "MASTERPIECES ANALYZED", value: "07+", detail: "Across 4 Literary Eras" },
-    { label: "CRITICAL LENSES APPLIED", value: "07", detail: "Marxist, Psychoanalytic, Feminist, etc." },
+    { label: "MASTERPIECES ANALYZED", value: "07+", detail: "Ancient Near Eastern to Medieval French" },
+    { label: "CRITICAL LENSES APPLIED", value: "07", detail: "Theological, Didactic, Cultural, Sociological, Psychoanalytic, Archetypal, Historical" },
     { label: "GUIDED REFLECTIONS", value: "05", detail: "Comprehensive Self-Examinations" },
     { label: "ORIGINAL SCHOLARSHIP", value: "100%", detail: "Analytical Rigor & Creative Synthesis" }
   ],
   analyses: [
     {
-      id: "metamorphosis",
+      id: "whirlwind",
       indexNumber: "#01",
-      title: "The Metamorphosis",
-      author: "Franz Kafka",
-      yearPublished: "1915",
-      lens: "Marxist Literary Theory",
+      title: "Voice out of the Whirlwind",
+      subtitle: "From The Book of Job",
+      author: "Anonymous",
+      tradition: "Ancient Near Eastern",
+      yearPublished: "c. 6th–4th Century BCE",
+      lens: "Theological & Existential",
       lensColor: "#FF3B00",
-      summary: "A searing allegory of labor exploitation, commodity fetishism, and the tragic alienation of the modern worker within industrial capitalism.",
-      fullAnalysis: {
-        thesis: "Kafka's 'The Metamorphosis' uses Gregor Samsa's grotesque entomological transmutation as a literalization of capitalist estrangement, illustrating how an individual's value in a market-driven society is contingent entirely upon economic productivity.",
-        introduction: "When traveling salesman Gregor Samsa wakes up transformed into a monstrous verminous insect ('ungeziefer'), his immediate terror is not physical deformity, but missing the 5:00 AM train for work. Through a Marxist theoretical framework, Kafka strips away bourgeois pretenses to reveal the brutal commodification of human life.",
-        criticalApplication: "Applying Karl Marx's theory of alienation (Entfremdung), Gregor suffers in four distinct dimensions: alienation from the product of his labor, from the act of production, from his human species-essence, and from fellow human beings. His frantic manager arrives at his home within hours of his absence, demonstrating that management regards employees not as humans, but as interchangeable mechanical units.",
-        textualEvidence: "Gregor's family displays affection only while he provides for their debts. The moment he becomes economically defunct, his sister Grete—formerly his closest advocate—concludes, 'We must try to get rid of it... If this were Gregor, he would have realized long ago that human beings cannot live with such a beast.' His father hurls apples at him, one of which rots in his flesh, symbolizing the violent hostility of the patriarchal-capitalist order against non-productive members.",
-        conclusion: "Kafka delivers an uncompromising diagnosis of modern labor: when humanity is reduced to economic utility, physical death is merely the postscript to a soul that was already liquidated by the demands of capital."
-      },
-      keyQuote: "“Was he an animal, that music had such an effect upon him? He felt as if the way were opening before him to the unknown nourishment he craved.”",
-      themes: ["Alienation of Labor", "Commodity Value vs Human Dignity", "Familial Guilt", "Bodily Autonomy"],
-      tags: ["Marxism", "Existentialism", "Modernism", "German Literature"],
-      imageCover: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80",
+      summary: "Divine revelation from the tempest dismantles human notions of retributive justice.",
+      paragraphs: [
+        "The \"Voice out of the Whirlwind\" serves as the dramatic climax of the Book of Job, abruptly shifting the narrative from human debate to divine revelation. Through an overwhelming display of rhetorical questions about the cosmos, the text dismantles anthropocentric views of justice.",
+        "Instead of directly answering Job’s questions about his suffering, the narrative emphasizes the incomprehensible scale of the universe. It suggests that human logic is insufficient to grasp the complexities of divine will, pushing the reader to accept faith and humility in the face of the unknown."
+      ],
+      imageCover: "/assets/analyses/voice.jpg",
+      imageAlt: "Dramatic cosmic whirlwind symbolizing the Voice out of the Whirlwind in the Book of Job",
+      imageCaption: "The Cosmos / Whirlwind — The Book of Job",
+      themes: ["Divine Revelation", "Cosmic Scale", "Humility & Faith", "Limits of Human Justice"],
+      tags: ["Theological", "Existential", "Book of Job", "Ancient Near Eastern"],
       accentColor: "#FF3B00"
     },
     {
-      id: "oedipus-rex",
+      id: "panchatantra",
       indexNumber: "#02",
-      title: "Oedipus Rex",
-      author: "Sophocles",
-      yearPublished: "c. 429 BCE",
-      lens: "Psychoanalytic & Archetypal Theory",
+      title: "The Panchatantra",
+      author: "Vishnu Sharma",
+      tradition: "Classical Sanskrit",
+      yearPublished: "c. 3rd Century BCE – 3rd Century CE",
+      lens: "Didactic & Moral",
       lensColor: "#0A0A0A",
-      summary: "The archetypal tragedy of blindness, self-discovery, repressed trauma, and the futile struggle of the human ego against deterministic destiny.",
-      fullAnalysis: {
-        thesis: "Through a Psychoanalytic lens, Sophocles' 'Oedipus Rex' dramatizes the violent collision between conscious conscious ego (Oedipus as rational detective) and the deeply repressed unconscious truths (the patricidal and incestuous fulfillment of fate).",
-        introduction: "Oedipus Rex stands as the foundational psychological archetype of Western dramatic literature. Sigismund Freud famously derived the 'Oedipus Complex' from this play, yet the work's psychological resonance extends far beyond repressed sexual instinct to encompass the trauma of epistemological awakening.",
-        criticalApplication: "Oedipus's hubris is fundamentally intellectual: he believes his conscious intellect, which solved the Sphinx's riddle, can outmaneuver the primordial unconscious prophesied by Apollo. In psychoanalytic terms, the plague consuming Thebes symbolizes the toxic symptom of a repressed historical crime that must be brought into conscious awareness before collective healing can occur.",
-        textualEvidence: "The dynamic between Oedipus and the blind prophet Tiresias establishes the central motif of sight versus insight. Tiresias taunts: 'You have your eyesight, and you do not see how miserably you are living.' When the horrific truth collapses into consciousness, Oedipus does not commit suicide like Jocasta; instead, he violently pierces his own eyes with her golden brooches, trading physiological sight for psychic insight.",
-        conclusion: "Sophocles reveals that true tragic nobility lies not in escaping fate or human fallibility, but in having the courage to confront the shadow self, take unconditional responsibility, and endure the agonizing burden of self-knowledge."
-      },
-      keyQuote: "“Fear? What has a man to do with fear? Chance rules our lives, and the future is all unknown. Best live as we may, from day to day.”",
-      themes: ["Fate vs Free Will", "Sight and Blindness", "The Shadow Archetype", "The Cost of Truth"],
-      tags: ["Psychoanalysis", "Greek Tragedy", "Archetypal", "Classical Drama"],
-      imageCover: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80",
+      summary: "Interwoven animal fables teaching practical statecraft, friendship, and survival.",
+      paragraphs: [
+        "Originally composed as a manual to teach practical wisdom to three ignorant princes, The Panchatantra uses interwoven animal fables to deliver its lessons. The text operates as a \"mirror for princes,\" reflecting the harsh realities of politics, friendship, and survival.",
+        "By utilizing animals that embody specific human traits, Sharma strips away the complexities of human society to reveal raw behavioral truths. The analysis reveals that the text prioritizes niti (wise conduct and practical survival) over idealistic morality, demonstrating how intellect and strategy can overcome brute strength."
+      ],
+      imageCover: "/assets/analyses/the-panchatantra.jpg",
+      imageAlt: "Traditional Indian animal fable motif illustrating The Panchatantra",
+      imageCaption: "Traditional Indian Animal Motif — The Panchatantra",
+      themes: ["Niti (Wise Conduct)", "Practical Statecraft", "Friendship & Survival", "Intellect Over Brute Strength"],
+      tags: ["Didactic", "Moral", "Animal Fables", "Classical Sanskrit"],
       accentColor: "#0A0A0A"
     },
     {
-      id: "pride-and-prejudice",
+      id: "ramayana",
       indexNumber: "#03",
-      title: "Pride and Prejudice",
-      author: "Jane Austen",
-      yearPublished: "1813",
-      lens: "Feminist Literary Criticism",
+      title: "The Ramayana",
+      author: "Valmiki",
+      tradition: "Ancient Indian Epic",
+      yearPublished: "c. 5th–1st Century BCE",
+      lens: "Cultural & Archetypal",
       lensColor: "#FF3B00",
-      summary: "A razor-sharp dissection of patriarchal marital economics, female intellectual autonomy, and institutional disenfranchisement in Regency England.",
-      fullAnalysis: {
-        thesis: "Austen weaponizes domestic satire and free indirect discourse to critique the socioeconomic helplessness of women under 19th-century entailment laws, establishing Elizabeth Bennet's intellectual defiance as a radical claim to female sovereignty.",
-        introduction: "Often reduced in popular culture to a cozy romantic melodrama, 'Pride and Prejudice' is fundamentally an urgent economic survival narrative. In a world where the Longbourn estate is entailed away to the pompous Mr. Collins, marriage for the Bennet sisters is an existential necessity rather than mere sentimental recreation.",
-        criticalApplication: "Feminist criticism illuminates the contrasting survival strategies enacted by Austen's female characters. Charlotte Lucas embodies pragmatic surrender to systemic patriarchal realities: she accepts Mr. Collins without illusion, stating that marriage is 'the only provision for well-educated women of small fortune.' In sharp contrast, Elizabeth's refusal of both Collins and Darcy's initial insolent proposal asserts that a woman's intellectual and emotional self-respect outweighs financial security.",
-        textualEvidence: "When Lady Catherine de Bourgh attempts to intimidate Elizabeth from marrying Darcy based on social rank, Elizabeth boldly counters: 'He is a gentleman; I am a gentleman's daughter; so far we are equal.' Here, Elizabeth dismantling aristocratic paternalism not with revolutionary violence, but with sheer rhetorical and ethical parity.",
-        conclusion: "Austen concludes that authentic union is only possible between intellectual equals who have stripped away both patriarchal condescension and defensive prejudice, reimagining love as a collaborative partnership of mutual respect."
-      },
-      keyQuote: "“There is a stubbornness about me that never can bear to be frightened at the will of others. My courage always rises at every attempt to intimidate me.”",
-      themes: ["Patriarchal Entailment", "Female Intellectual Autonomy", "Social Class Rigidities", "Self-Delusion"],
-      tags: ["Feminism", "Regency", "British Literature", "Social Satire"],
-      imageCover: "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=800&q=80",
+      summary: "An enduring epic of Dharma, devotion, exile, and the cosmic struggle against chaos.",
+      paragraphs: [
+        "The Ramayana is foundational to the cultural and ethical fabric of South and Southeast Asia. Analyzing it through a cultural lens highlights the concept of Dharma—duty, righteousness, and moral order.",
+        "Rama serves as the archetype of the ideal king and son, willing to accept exile to honor his father's word. Sita embodies the archetype of devotion and resilience. The conflict between Rama and Ravana transcends a simple battle, representing the eternal struggle between cosmic order (Dharma) and chaos (Adharma). The epic profoundly shaped regional values regarding loyalty, sacrifice, and leadership."
+      ],
+      imageCover: "/assets/analyses/ramayana.jpg",
+      imageAlt: "Illustration of Rama with bow from Valmiki's The Ramayana",
+      imageCaption: "Rama with Bow — The Ramayana",
+      themes: ["Dharma vs Adharma", "Duty & Sacrifice", "Devotion & Resilience", "Ideal Leadership"],
+      tags: ["Cultural", "Archetypal", "Ancient Indian Epic", "South Asian Heritage"],
       accentColor: "#FF3B00"
     },
     {
-      id: "great-gatsby",
+      id: "mahabharata",
       indexNumber: "#04",
-      title: "The Great Gatsby",
-      author: "F. Scott Fitzgerald",
-      yearPublished: "1925",
-      lens: "Historical-Biographical Criticism",
+      title: "The Mahabharata",
+      author: "Vyasa",
+      tradition: "Ancient Indian Epic",
+      yearPublished: "c. 4th Century BCE – 4th Century CE",
+      lens: "Sociological & Ethical",
       lensColor: "#0A0A0A",
-      summary: "An indictment of the hollow consumerism, moral decay, and mythological mirage of the American Dream in the post-WWI Jazz Age.",
-      fullAnalysis: {
-        thesis: "Reading Fitzgerald through a Historical-Biographical lens demonstrates how Jay Gatsby's fabricated identity and tragic demise mirror the author's own anxieties of social illegitimacy, post-war trauma, and the predatory cynicism of Old Money America.",
-        introduction: "Set in the feverish summer of 1922, 'The Great Gatsby' captures the moral disorientation following the slaughter of World War I. Prohibition, rapid industrial expansion, and Wall Street speculation birthed an ostentatious nouveaux-riches class whose social climbing concealed profound spiritual barrenness.",
-        criticalApplication: "Fitzgerald transposes his personal insecurity regarding his Midwestern background and courtship of Zelda Sayre into Gatsby's hopeless romantic crusade for Daisy Buchanan. The geography of Long Island acts as an ideological map: West Egg represents vulgar, unvetted ambition, while East Egg represents hereditary, callous aristocracy that crushes interlopers with impunity.",
-        textualEvidence: "Nick Carraway's final judgment of Tom and Daisy Buchanan encapsulates the historical moral rot of the ruling elite: 'They were careless people, Tom and Daisy—they smashed up things and creatures and then retreated back into their money or their vast carelessness.' Gatsby's vigil outside Daisy's house, staring at the green light across the bay, crystallizes the illusion that wealth can rewind time and purchase genuine affection.",
-        conclusion: "The novel stands as a devastating elegy for an empire that confused financial accumulation with spiritual redemption, leaving its dreamers murdered in swimming pools while the careless heirs retreat into pristine mansions."
-      },
-      keyQuote: "“So we beat on, boats against the current, borne back ceaselessly into the past.”",
-      themes: ["The Death of the American Dream", "Old Money vs New Wealth", "Time and Nostalgia", "Class Protectionism"],
-      tags: ["Historical-Biographical", "Jazz Age", "American Literature", "Lost Generation"],
-      imageCover: "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=800&q=80",
+      summary: "A vast dynastic tragedy probing caste, familial loyalty, and the moral cost of war.",
+      paragraphs: [
+        "Unlike the clear-cut morality of the Ramayana, the Mahabharata presents a universe steeped in moral ambiguity. Through a sociological lens, the epic explores the devastating consequences of dynastic conflict and the complexities of human relationships within a rigid caste system.",
+        "The text intricately examines the conflict between personal desire and societal duty. The characters, particularly in the Bhagavad Gita segment, grapple with the ethics of war and familial loyalty. It underscores the tragic reality that in the pursuit of righteous victory, both the victors and the defeated suffer immense loss."
+      ],
+      imageCover: "/assets/analyses/the-mahabharata-5.jpg",
+      imageAlt: "Kurukshetra war chariot scene from Vyasa's The Mahabharata",
+      imageCaption: "Kurukshetra War Chariot — The Mahabharata",
+      themes: ["Moral Ambiguity", "Dynastic Conflict & Caste", "Personal Desire vs Societal Duty", "The Ethics of War"],
+      tags: ["Sociological", "Ethical", "Bhagavad Gita", "Ancient Indian Epic"],
       accentColor: "#0A0A0A"
     },
     {
-      id: "things-fall-apart",
+      id: "iliad",
       indexNumber: "#05",
-      title: "Things Fall Apart",
-      author: "Chinua Achebe",
-      yearPublished: "1958",
-      lens: "Post-Colonial & Cultural Criticism",
+      title: "The Iliad",
+      author: "Homer",
+      tradition: "Classical Greek",
+      yearPublished: "c. 8th Century BCE",
+      lens: "Psychoanalytic & Heroic",
       lensColor: "#FF3B00",
-      summary: "A profound reclamation of African humanity and complex social order against European colonial paternalism and cultural erasure.",
-      fullAnalysis: {
-        thesis: "Achebe employs Post-Colonial literary resistance to dismantle Eurocentric 'Heart of Darkness' tropes, portraying Umuofia as a sophisticated, spiritually cohesive, yet internally conflicted society dismantled by British imperialist hegemony.",
-        introduction: "Written as an intentional counter-narrative to colonialist depictions of Africa as a savage, pre-linguistic void, 'Things Fall Apart' chronicles the tragic trajectory of Okonkwo and the Igbo people at the turn of the 20th century.",
-        criticalApplication: "A Post-Colonial lens emphasizes Achebe's revolutionary linguistic choice: writing in English, but infusing the language with Igbo proverbs ('proverbs are the palm-oil with which words are eaten'). Achebe does not idealize pre-colonial Igbo society—he unflinchingly details the discarding of twins and the execution of Ikemefuna—thereby granting his subjects the ultimate dignity of complex, flawed humanity.",
-        textualEvidence: "The tragic climax pivots on the colonial commissioner's cold, bureaucratic gaze. Following Okonkwo's suicide in defense of a shattered way of life, the British District Commissioner decides the event might warrant 'almost a whole chapter' or 'a reasonable paragraph' in his book, 'The Pacification of the Primitive Tribes of the Lower Niger.' Achebe brilliantly subverts this footnote into an enduring global epic.",
-        conclusion: "Achebe demonstrates that colonial subjugation succeeds not merely through military superior firepower, but through linguistic violence and cultural alienation that ruptures a community's sacred self-understanding."
-      },
-      keyQuote: "“The white man is very clever. He came quietly and peaceably with his religion. We were amused at his foolishness... Now he has won our brothers, and our clan can no longer act like one.”",
-      themes: ["Colonial Rupture", "Cultural Complexity", "Destructive Hyper-Masculinity", "Linguistic Resistance"],
-      tags: ["Post-Colonial", "African Literature", "Cultural Identity", "Igbo Heritage"],
-      imageCover: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=800&q=80",
+      summary: "A study of Achilles' rage, heroic pride, and shared mortality before the walls of Troy.",
+      paragraphs: [
+        "The Iliad is fundamentally a study of rage (mênis) and its destructive consequences. A psychoanalytic reading of Achilles reveals a hero driven by a fragile ego and an insatiable need for kleos (immortal glory).",
+        "Achilles' withdrawal from the battle due to a perceived slight by Agamemnon illustrates how unchecked pride can unravel an entire society. The epic deconstructs the heroic code, showing the immense psychological toll of war. It is only when Achilles weeps with Priam at the end that he transcends his rage, acknowledging shared human mortality."
+      ],
+      imageCover: "/assets/analyses/the-iliad.jpg",
+      imageAlt: "Classical depiction of Achilles and Trojan warfare from Homer's The Iliad",
+      imageCaption: "Achilles & the Trojan War — The Iliad",
+      themes: ["Mênis (Destructive Rage)", "Fragile Ego & Kleos", "Deconstruction of Heroic Pride", "Shared Human Mortality"],
+      tags: ["Psychoanalytic", "Heroic", "Classical Greek", "Trojan War"],
       accentColor: "#FF3B00"
     },
     {
-      id: "hamlet",
+      id: "odyssey",
       indexNumber: "#06",
-      title: "Hamlet",
-      author: "William Shakespeare",
-      yearPublished: "c. 1601",
-      lens: "Formalism & Structural Criticism",
+      title: "The Odyssey",
+      author: "Homer",
+      tradition: "Classical Greek",
+      yearPublished: "c. 8th Century BCE",
+      lens: "Archetypal (The Hero's Journey)",
       lensColor: "#0A0A0A",
-      summary: "The definitive masterwork of existential interiority, structural delay, linguistic duplicity, and the paralysis of conscious reflection.",
-      fullAnalysis: {
-        thesis: "Through a Formalist critical lens, Shakespeare's 'Hamlet' weaponizes theatrical self-reflexivity, linguistic punning, and recurrent motifs of biological decay ('something is rotten in the state of Denmark') to construct an unprecedented architectural study of human consciousness.",
-        introduction: "While conventional revenge tragedies of the Elizabethan era emphasize swift blood vengeance, Hamlet subverts expectations through radical structural suspension. The play's dramatic tension arises not from what occurs, but from the cognitive friction between thought and action.",
-        criticalApplication: "Formalism directs our attention to the text's organic harmony and linguistic textures. Hamlet's seven soliloquies are not mere plot exposition; they are formal explorations of epistemological doubt. Shakespeare constructs recurring patterns of disease, rot, and espionage ('The Mousetrap' play-within-a-play mirrors Claudius's crime) to reinforce how political tyranny infects the entire linguistic and psychological fabric of Elsinore.",
-        textualEvidence: "Hamlet's dialogue is saturated with double entendres and syntactic ambiguity ('A little more than kin, and less than kind'). In his confrontation with Ophelia and his meditation over Yorick's skull, Hamlet formalizes the visceral reduction of imperial kingship to common dust: 'Alexander died, Alexander was buried, Alexander returneth to dust... of that loam might they stop a beer-barrel?'",
-        conclusion: "Shakespeare's formal mastery proves that revenge is an annihilating vacuum; by the time the sword strikes Claudius, Hamlet has already dismantled the moral sanity of the court, leaving only silence in its wake."
-      },
-      keyQuote: "“There are more things in heaven and earth, Horatio, Than are dreamt of in your philosophy.”",
-      themes: ["Thought vs Action", "The Architecture of Grief", "Political Corruption", "The Theatricality of Life"],
-      tags: ["Formalism", "Shakespeare", "Renaissance Drama", "Existential Doubt"],
-      imageCover: "https://images.unsplash.com/photo-1461360370896-922624d12aa1?auto=format&fit=crop&w=800&q=80",
+      summary: "Odysseus's ten-year voyage home: cunning, endurance, hospitality, and psychological return.",
+      paragraphs: [
+        "The Odyssey is the quintessential narrative of the Hero’s Journey, mapping not just a physical return from Troy, but a psychological integration. Odysseus represents the archetype of the trickster and the enduring survivor (polytropos—the man of many turns).",
+        "His encounters with monsters, witches, and the underworld symbolize the trials required to shed the identity of a warrior and reclaim the role of a king and father. The epic emphasizes nostos (homecoming) and xenia (hospitality), contrasting the civilized world of Ithaca with the chaotic, primal forces of the sea."
+      ],
+      imageCover: "/assets/analyses/the-odyssey.jpg",
+      imageAlt: "Greek vessel navigating open waters in Homer's The Odyssey",
+      imageCaption: "Voyage Across the Sea — The Odyssey",
+      themes: ["The Hero's Journey", "Polytropos (Cunning & Survival)", "Nostos (Homecoming)", "Xenia (Hospitality)"],
+      tags: ["Archetypal", "Hero's Journey", "Classical Greek", "Epic"],
       accentColor: "#0A0A0A"
     },
     {
-      id: "1984",
+      id: "song-of-roland",
       indexNumber: "#07",
-      title: "1984",
-      author: "George Orwell",
-      yearPublished: "1949",
-      lens: "Deconstruction & Structural Power",
+      title: "The Song of Roland",
+      author: "Unknown",
+      tradition: "Medieval French (Chanson de Geste)",
+      yearPublished: "c. 11th Century CE",
+      lens: "Historical & Cultural",
       lensColor: "#FF3B00",
-      summary: "A terrifying anatomy of psychological totalitarianism, semantic erosion through Newspeak, and the destruction of objective truth.",
-      fullAnalysis: {
-        thesis: "Applying Deconstruction to Orwell's '1984' reveals how Ingsoc maintains absolute dominion not primarily through physical surveillance, but by destabilizing binary language systems, demonstrating that reality is an arbitrary construct policed by state power.",
-        introduction: "Published in the shadow of World War II and the dawn of the Cold War, Orwell's harrowing dystopia envisions Oceania: a society where the Party exerts total surveillance over speech, behavior, and subconscious desire.",
-        criticalApplication: "Jacques Derrida's deconstructive principle that meaning is inherently slippery and historically constructed becomes Ingsoc's ultimate weapon. Through 'Newspeak', the Party actively eliminates antonyms and nuances to make heretical thoughts linguistically impossible ('free' exists only in the sense of 'the dog is free from lice'). The paradoxes of Party slogans—'WAR IS PEACE', 'FREEDOM IS SLAVERY', 'IGNORANCE IS STRENGTH'—are deliberate deconstructive fissures that force the human mind to hold two contradictory beliefs simultaneously (Doublethink).",
-        textualEvidence: "In the sterile horrors of the Ministry of Love, inquisitor O'Brien deconstructs Winston Smith's stubborn belief in empirical reality: 'You believe that reality is something objective, external, existing in its own right... But I tell you, Winston, that reality is not external. Reality exists in the human mind, and nowhere else.' When Winston finally accepts that '2 + 2 = 5', the Party has achieved total semiotic colonization.",
-        conclusion: "Orwell warns that democracy dies the moment citizens surrender their linguistic autonomy; when language loses its grounding in verifiable truth, tyranny becomes the sole author of human perception."
-      },
-      keyQuote: "“Freedom is the freedom to say that two plus two make four. If that is granted, all else follows.”",
-      themes: ["Linguistic Erasure", "Totalitarian Surveillance", "The Malleability of Memory", "The Death of the Self"],
-      tags: ["Deconstruction", "Dystopian", "Political Philosophy", "20th Century Fiction"],
-      imageCover: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80",
+      summary: "Feudal loyalty, chivalric pride, and the sounding of the Olifant at Roncevaux Pass.",
+      paragraphs: [
+        "As a chanson de geste (song of heroic deeds), The Song of Roland served as medieval propaganda, reinforcing the feudal values of 11th-century France. Viewed through a historical lens, the text glorifies the ideals of chivalry, absolute loyalty to one's liege lord (Charlemagne), and the militant defense of Christendom.",
+        "Roland’s refusal to sound his horn (the Olifant) out of pride perfectly captures the fatal flaw inherent in the chivalric code. The epic heavily romanticizes martyrdom, establishing a rigid binary between the \"righteous\" Franks and their enemies, which historically served to unite the French during the Crusades."
+      ],
+      imageCover: "/assets/analyses/song-of-roland.jpg",
+      imageAlt: "Medieval scene depicting Roland and the Battle of Roncevaux Pass",
+      imageCaption: "The Olifant & Roncevaux Pass — The Song of Roland",
+      themes: ["Feudal Loyalty", "Chivalric Pride & the Olifant", "Medieval Propaganda", "Martyrdom & Binary Worldview"],
+      tags: ["Historical", "Cultural", "Chanson de Geste", "Medieval French"],
       accentColor: "#FF3B00"
     }
   ],

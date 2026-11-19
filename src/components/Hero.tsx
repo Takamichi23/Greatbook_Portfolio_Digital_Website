@@ -219,7 +219,7 @@ export const Hero: React.FC<HeroProps> = ({
 
               {/* Mission Statement */}
               <p className="font-body text-sm sm:text-base text-[#0A0A0A] font-medium leading-relaxed max-w-md bg-white/90 backdrop-blur-xs p-3 rounded-xs border-l-3 border-[#FF3B00] shadow-xs">
-                A comprehensive digital portfolio examining timeless works of world literature—interrogating classical drama, social satire, Victorian feminism, and totalitarian control through rigorous critical lenses.
+                A comprehensive digital portfolio examining timeless works of world literature—from Ancient Near Eastern wisdom and Sanskrit epics to Homeric classics and medieval chivalry—through seven distinct critical lenses.
               </p>
 
               {/* Action Buttons */}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { AnalysisItem } from '../data/portfolioData'
-import { BookOpen, X, ArrowUpRight, Search, Quote, ExternalLink, Sparkles, Filter, CheckCircle2, Check } from 'lucide-react'
+import { X, ArrowUpRight, Search, Filter, CheckCircle2, Check, BookOpen } from 'lucide-react'
 import { playClickSound, playStickerPop } from '../utils/audio'
 
 interface LiteraryAnalysesProps {
@@ -38,11 +38,15 @@ export const LiteraryAnalyses: React.FC<LiteraryAnalysesProps> = ({
   // Filtered list
   const filteredAnalyses = analyses.filter((item) => {
     const matchesLens = selectedLens === 'ALL' || item.lens === selectedLens
+    const q = searchQuery.toLowerCase()
     const matchesSearch =
-      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.lens.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.summary.toLowerCase().includes(searchQuery.toLowerCase())
+      item.title.toLowerCase().includes(q) ||
+      (item.subtitle && item.subtitle.toLowerCase().includes(q)) ||
+      item.author.toLowerCase().includes(q) ||
+      item.tradition.toLowerCase().includes(q) ||
+      item.lens.toLowerCase().includes(q) ||
+      item.summary.toLowerCase().includes(q) ||
+      item.paragraphs.some((p) => p.toLowerCase().includes(q))
     return matchesLens && matchesSearch
   })
 
@@ -134,21 +138,21 @@ export const LiteraryAnalyses: React.FC<LiteraryAnalysesProps> = ({
                 }`}
               >
                 <div>
-                  {/* Card Top Strip with Index Badge & Lens */}
-                  <div className="p-4 border-b-2 border-[#0A0A0A] flex items-center justify-between bg-[#FFFFFF] group-hover:bg-[#0A0A0A] transition-colors">
-                    <div className="flex items-center gap-2">
-                      <span className="font-headline text-2xl font-black text-[#FF3B00] group-hover:text-white">
+                  {/* Card Top Strip with Index Badge & Period */}
+                  <div className="p-4 border-b-2 border-[#0A0A0A] flex items-center justify-between gap-2 bg-[#FFFFFF] group-hover:bg-[#0A0A0A] transition-colors">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <span className="font-headline text-2xl font-black text-[#FF3B00] group-hover:text-white shrink-0">
                         {item.indexNumber}
                       </span>
-                      <span className="h-4 w-[1px] bg-[#0A0A0A]/30 group-hover:bg-white/30" />
-                      <span className="font-mono text-[11px] font-bold text-[#0A0A0A] group-hover:text-white uppercase truncate">
+                      <span className="h-4 w-[1px] bg-[#0A0A0A]/30 group-hover:bg-white/30 shrink-0" />
+                      <span className="font-mono text-[10px] font-bold text-[#0A0A0A] group-hover:text-white uppercase truncate">
                         {item.yearPublished}
                       </span>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1.5 shrink-0">
                       {isReviewed && (
-                        <span className="text-[10px] font-mono font-bold bg-[#FF3B00] text-white px-1.5 py-0.2 rounded-xs flex items-center gap-1">
+                        <span className="text-[10px] font-mono font-bold bg-[#FF3B00] text-white px-1.5 py-0.5 rounded-xs flex items-center gap-1">
                           <Check className="w-3 h-3 stroke-[3]" />
                           READ
                         </span>
@@ -160,18 +164,37 @@ export const LiteraryAnalyses: React.FC<LiteraryAnalysesProps> = ({
                     </div>
                   </div>
 
-                  {/* Cover Image Placeholder Container with Theme Accent */}
-                  <div className="relative aspect-[16/9] w-full bg-[#ECECEE] border-b-2 border-[#0A0A0A] overflow-hidden">
+                  {/* Full-Color Book Cover Showcase Container */}
+                  <div
+                    onClick={() => {
+                      playStickerPop(soundEnabled)
+                      setSelectedAnalysis(item)
+                    }}
+                    className="relative h-64 w-full bg-[#141414] border-b-2 border-[#0A0A0A] overflow-hidden cursor-pointer flex items-center justify-center p-4"
+                  >
+                    {/* Subtle blurred ambient backdrop of the cover */}
                     <img
                       src={item.imageCover}
-                      alt={`${item.title} book cover artwork`}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 filter grayscale contrast-125 group-hover:grayscale-0"
+                      alt=""
+                      aria-hidden="true"
+                      className="absolute inset-0 w-full h-full object-cover blur-md opacity-30 scale-110 pointer-events-none"
+                    />
+                    {/* Crisp uncropped book cover artwork */}
+                    <img
+                      src={item.imageCover}
+                      alt={item.imageAlt}
+                      className="relative z-10 h-full w-auto max-w-full object-contain border border-white/20 shadow-[0_12px_24px_rgba(0,0,0,0.55)] transition-transform duration-500 group-hover:scale-105"
                       loading="lazy"
                     />
                     {/* Overlay Lens Badge */}
-                    <div className="absolute bottom-2 left-2 bg-[#0A0A0A] text-white px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wider border border-white">
+                    <div className="absolute bottom-2 left-2 z-20 bg-[#0A0A0A]/95 text-white px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wider border border-white/80">
                       LENS: {item.lens}
                     </div>
+                  </div>
+
+                  {/* Editorial Image Caption Strip */}
+                  <div className="px-4 py-1.5 bg-[#F4F4F5] border-b border-[#0A0A0A]/20 font-mono text-[10px] text-[#0A0A0A]/70 truncate">
+                    {item.imageCaption}
                   </div>
 
                   {/* Main Content Area */}
@@ -180,19 +203,24 @@ export const LiteraryAnalyses: React.FC<LiteraryAnalysesProps> = ({
                       <h3 className="font-headline text-xl sm:text-2xl uppercase tracking-tight text-[#0A0A0A] group-hover:text-[#FF3B00] transition-colors leading-tight">
                         {item.title}
                       </h3>
-                      <p className="font-mono text-xs font-bold text-[#0A0A0A]/70 uppercase tracking-wider mt-0.5">
-                        BY {item.author}
+                      {item.subtitle && (
+                        <p className="font-body text-xs italic text-[#0A0A0A]/70 mt-0.5">
+                          {item.subtitle}
+                        </p>
+                      )}
+                      <p className="font-mono text-xs font-bold text-[#0A0A0A]/75 uppercase tracking-wider mt-1">
+                        BY {item.author} • <span className="text-[#FF3B00]">{item.tradition}</span>
                       </p>
                     </div>
 
-                    {/* Summary */}
-                    <p className="font-body text-xs sm:text-sm text-[#0A0A0A]/85 leading-relaxed line-clamp-3">
+                    {/* Blurb / Summary */}
+                    <p className="font-body text-xs sm:text-sm font-semibold text-[#0A0A0A] leading-relaxed">
                       {item.summary}
                     </p>
 
-                    {/* Key Quote preview */}
-                    <div className="p-3 bg-[#F4F4F5] border-l-2 border-[#FF3B00] text-xs font-body italic text-[#0A0A0A]/90">
-                      {item.keyQuote}
+                    {/* Opening Analysis Excerpt */}
+                    <div className="p-3 bg-[#F4F4F5] border-l-2 border-[#FF3B00] text-xs font-body text-[#0A0A0A]/85 leading-relaxed line-clamp-3">
+                      {item.paragraphs[0]}
                     </div>
 
                     {/* Theme tags */}
@@ -260,7 +288,7 @@ export const LiteraryAnalyses: React.FC<LiteraryAnalysesProps> = ({
                 playClickSound(soundEnabled)
                 setSelectedAnalysis(null)
               }}
-              className="fixed inset-0 bg-[#0A0A0A]/70 backdrop-blur-xs"
+              className="fixed inset-0 bg-[#0A0A0A]/75 backdrop-blur-xs"
             />
 
             {/* Modal Dialog */}
@@ -280,9 +308,10 @@ export const LiteraryAnalyses: React.FC<LiteraryAnalysesProps> = ({
                   <div className="flex flex-col">
                     <span className="font-headline text-lg sm:text-xl uppercase tracking-tight text-white leading-none">
                       {selectedAnalysis.title}
+                      {selectedAnalysis.subtitle ? ` — ${selectedAnalysis.subtitle}` : ''}
                     </span>
-                    <span className="font-mono text-xs text-[#FF3B00] font-bold uppercase mt-0.5">
-                      BY {selectedAnalysis.author} ({selectedAnalysis.yearPublished})
+                    <span className="font-mono text-xs text-[#FF3B00] font-bold uppercase mt-1">
+                      BY {selectedAnalysis.author} • {selectedAnalysis.tradition} ({selectedAnalysis.yearPublished})
                     </span>
                   </div>
                 </div>
@@ -292,7 +321,7 @@ export const LiteraryAnalyses: React.FC<LiteraryAnalysesProps> = ({
                     playClickSound(soundEnabled)
                     setSelectedAnalysis(null)
                   }}
-                  className="w-8 h-8 rounded-xs bg-white/10 hover:bg-[#FF3B00] hover:text-white text-white flex items-center justify-center transition-colors font-mono font-bold"
+                  className="w-8 h-8 rounded-xs bg-white/10 hover:bg-[#FF3B00] hover:text-white text-white flex items-center justify-center transition-colors font-mono font-bold shrink-0"
                   aria-label="Close Analysis Modal"
                 >
                   <X className="w-5 h-5" />
@@ -300,89 +329,92 @@ export const LiteraryAnalyses: React.FC<LiteraryAnalysesProps> = ({
               </div>
 
               {/* Lens Strip */}
-              <div className="px-5 py-2 bg-[#FF3B00] text-white flex items-center justify-between font-mono text-xs font-black uppercase">
+              <div className="px-5 py-2 bg-[#FF3B00] text-white flex flex-wrap items-center justify-between gap-2 font-mono text-xs font-black uppercase">
                 <span>LITERARY LENS: {selectedAnalysis.lens}</span>
-                <span>GREAT BOOKS SCHOLARSHIP // CRITICAL ESSAY</span>
+                <span>GREAT BOOKS SCHOLARSHIP // FULL LITERARY ANALYSIS</span>
               </div>
 
-              {/* Modal Body: Complete 5-Part Academic Essay */}
+              {/* Modal Body: Book Cover Exhibit + Full Verbatim Analysis */}
               <div className="p-6 sm:p-8 overflow-y-auto space-y-6 font-body text-[#0A0A0A]">
                 
-                {/* Thesis Statement Banner */}
-                <div className="p-4 sm:p-5 bg-[#F4F4F5] border-2 border-[#0A0A0A] shadow-brutalist">
-                  <span className="font-mono text-[11px] font-black text-[#FF3B00] uppercase tracking-widest block mb-1">
-                    /// CENTRAL THESIS STATEMENT
-                  </span>
-                  <p className="font-display text-sm sm:text-base font-extrabold text-[#0A0A0A] leading-snug">
-                    {selectedAnalysis.fullAnalysis.thesis}
-                  </p>
-                </div>
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+                  {/* Left: Full-Color Book Cover Display */}
+                  <div className="md:col-span-4 flex flex-col">
+                    <div className="bg-[#141414] border-2 border-[#0A0A0A] shadow-brutalist p-3 flex items-center justify-center">
+                      <img
+                        src={selectedAnalysis.imageCover}
+                        alt={selectedAnalysis.imageAlt}
+                        className="w-full max-h-80 object-contain"
+                      />
+                    </div>
+                    <p className="mt-2 font-mono text-[10px] text-[#0A0A0A]/70 uppercase text-center">
+                      {selectedAnalysis.imageCaption}
+                    </p>
+                  </div>
 
-                {/* Section 1: Introduction */}
-                <div className="space-y-2">
-                  <h4 className="font-headline text-lg uppercase tracking-wider text-[#0A0A0A] flex items-center gap-2">
-                    <span className="text-[#FF3B00]">01.</span> Introduction & Contextual Grounding
-                  </h4>
-                  <p className="text-sm sm:text-base leading-relaxed text-[#0A0A0A]/90">
-                    {selectedAnalysis.fullAnalysis.introduction}
-                  </p>
-                </div>
-
-                {/* Section 2: Critical Application of Lens */}
-                <div className="space-y-2">
-                  <h4 className="font-headline text-lg uppercase tracking-wider text-[#0A0A0A] flex items-center gap-2">
-                    <span className="text-[#FF3B00]">02.</span> Critical Framework & Lens Interrogation
-                  </h4>
-                  <p className="text-sm sm:text-base leading-relaxed text-[#0A0A0A]/90">
-                    {selectedAnalysis.fullAnalysis.criticalApplication}
-                  </p>
-                </div>
-
-                {/* Quote Highlight */}
-                <div className="p-5 bg-[#0A0A0A] text-white border-l-4 border-[#FF3B00] space-y-2">
-                  <Quote className="w-5 h-5 text-[#FF3B00]" />
-                  <p className="font-display text-sm sm:text-base italic leading-relaxed">
-                    {selectedAnalysis.keyQuote}
-                  </p>
-                  <span className="font-mono text-[10px] text-[#FF3B00] block uppercase tracking-wider font-bold">
-                    — KEY TEXTUAL EVIDENCE // {selectedAnalysis.title.toUpperCase()}
-                  </span>
-                </div>
-
-                {/* Section 3: Textual Evidence & Analysis */}
-                <div className="space-y-2">
-                  <h4 className="font-headline text-lg uppercase tracking-wider text-[#0A0A0A] flex items-center gap-2">
-                    <span className="text-[#FF3B00]">03.</span> Textual Evidence & Thematic Tension
-                  </h4>
-                  <p className="text-sm sm:text-base leading-relaxed text-[#0A0A0A]/90">
-                    {selectedAnalysis.fullAnalysis.textualEvidence}
-                  </p>
-                </div>
-
-                {/* Section 4: Conclusion & Modern Synthesis */}
-                <div className="space-y-2">
-                  <h4 className="font-headline text-lg uppercase tracking-wider text-[#0A0A0A] flex items-center gap-2">
-                    <span className="text-[#FF3B00]">04.</span> Conclusion & Human Realization
-                  </h4>
-                  <p className="text-sm sm:text-base leading-relaxed text-[#0A0A0A]/90">
-                    {selectedAnalysis.fullAnalysis.conclusion}
-                  </p>
-                </div>
-
-                {/* Thematic Tags */}
-                <div className="pt-4 border-t border-[#0A0A0A]/20">
-                  <span className="font-mono text-xs font-bold text-[#0A0A0A]/60 block mb-2 uppercase">
-                    THEMATIC TAGS & CLASSIFICATIONS:
-                  </span>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedAnalysis.tags.map((tag, tIdx) => (
-                      <span
-                        key={tIdx}
-                        className="px-2.5 py-1 bg-[#F4F4F5] border border-[#0A0A0A] font-mono text-xs font-bold text-[#0A0A0A]"
-                      >
-                        #{tag}
+                  {/* Right: Summary Callout + Full Analysis Paragraphs */}
+                  <div className="md:col-span-8 space-y-5">
+                    {/* Overview Banner */}
+                    <div className="p-4 bg-[#F4F4F5] border-2 border-[#0A0A0A] shadow-brutalist">
+                      <span className="font-mono text-[10px] font-black text-[#FF3B00] uppercase tracking-widest block mb-1">
+                        /// CRITICAL OVERVIEW
                       </span>
-                    ))}
+                      <p className="font-display text-sm sm:text-base font-extrabold text-[#0A0A0A] leading-snug">
+                        {selectedAnalysis.summary}
+                      </p>
+                    </div>
+
+                    {/* Verbatim Analysis Paragraphs */}
+                    <div className="space-y-4">
+                      <h4 className="font-headline text-lg uppercase tracking-wider text-[#0A0A0A] flex items-center gap-2 border-b border-[#0A0A0A]/20 pb-2">
+                        <BookOpen className="w-4 h-4 text-[#FF3B00]" />
+                        <span>Literary Analysis — {selectedAnalysis.lens}</span>
+                      </h4>
+
+                      {selectedAnalysis.paragraphs.map((paragraph, pIdx) => (
+                        <p
+                          key={pIdx}
+                          className="text-sm sm:text-base leading-relaxed text-[#0A0A0A]/90"
+                        >
+                          {paragraph}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Key Themes & Tags */}
+                <div className="pt-4 border-t border-[#0A0A0A]/20 space-y-3">
+                  <div>
+                    <span className="font-mono text-xs font-bold text-[#0A0A0A]/60 block mb-2 uppercase">
+                      KEY THEMES & MOTIFS:
+                    </span>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedAnalysis.themes.map((theme, tIdx) => (
+                        <span
+                          key={tIdx}
+                          className="px-2.5 py-1 bg-[#0A0A0A] text-white font-mono text-xs font-bold"
+                        >
+                          {theme}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <span className="font-mono text-xs font-bold text-[#0A0A0A]/60 block mb-2 uppercase">
+                      CLASSIFICATIONS:
+                    </span>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedAnalysis.tags.map((tag, tIdx) => (
+                        <span
+                          key={tIdx}
+                          className="px-2.5 py-1 bg-[#F4F4F5] border border-[#0A0A0A] font-mono text-xs font-bold text-[#0A0A0A]"
+                        >
+                          #{tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
@@ -414,7 +446,7 @@ export const LiteraryAnalyses: React.FC<LiteraryAnalysesProps> = ({
                   }}
                   className="px-4 py-2 bg-[#0A0A0A] text-white hover:bg-[#FF3B00] transition-colors font-bold uppercase tracking-wider shadow-xs ml-auto"
                 >
-                  CLOSE ESSAY
+                  CLOSE ANALYSIS
                 </button>
               </div>
             </motion.div>
